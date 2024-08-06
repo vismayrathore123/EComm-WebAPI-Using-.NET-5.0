@@ -30,6 +30,7 @@ namespace EComm
         {
 
             services.AddControllers();
+            services.AddMvc().AddXmlSerializerFormatters();
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddSwaggerGen(c =>
             {
@@ -38,7 +39,7 @@ namespace EComm
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -46,7 +47,7 @@ namespace EComm
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "EComm v1"));
             }
-            context.Database.EnsureCreated();
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();
