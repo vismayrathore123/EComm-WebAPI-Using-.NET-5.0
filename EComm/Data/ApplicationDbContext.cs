@@ -9,23 +9,25 @@ namespace EComm.Data
         {
         }
 
-        public DbSet<Category> Categories { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<BookCover> BookCovers{ get; set; }
+        public DbSet<BookWritter> BookWritters { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Category>().HasData(
-                new Category
-                {
-                    Id = 1,
-                    Title = "Samsung",
-                    DisplayOrder = 1,
-                },
-                new Category
-                {
-                    Id = 2,
-                    Title = "Realme",
-                    DisplayOrder = 2
-                });
-        }
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Category>().HasData(
+        //        new Category
+        //        {
+        //            Id = 1,
+        //            Title = "Samsung",
+        //            DisplayOrder = 1,
+        //        },
+        //        new Category
+        //        {
+        //            Id = 2,
+        //            Title = "Realme",
+        //            DisplayOrder = 2
+        //        });
+        //}
     }
 }
