@@ -5,6 +5,7 @@ using EComm.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,11 +19,14 @@ namespace EComm.Controllers
     public class CategoryController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public CategoryController(ApplicationDbContext context)
+        public CategoryController(ApplicationDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
+
 
         // GET: api/<CategoryController>
         [HttpGet]
@@ -47,22 +51,18 @@ namespace EComm.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromForm] Category category)
         {
-
-            string connectionString = Environment.GetEnvironmentVariable(@"DefaultEndpointsProtocol=https;AccountName=shoppingcartstoragevr;AccountKey=80nYi94NkfSILiyPpCqnnFX4iKbCaZdkiV7Ng/EJqc7fkinYD1iPnkHsnvWmIjcdjocLYPqRCWde+AStwhR+dg==;EndpointSuffix=core.windows.net");
-
-            //string connectionString = @"DefaultEndpointsProtocol=https;AccountName=shoppingcartstoragevr;AccountKey=80nYi94NkfSILiyPpCqnnFX4iKbCaZdkiV7Ng/EJqc7fkinYD1iPnkHsnvWmIjcdjocLYPqRCWde+AStwhR+dg==;EndpointSuffix=core.windows.net";
+            string connectionString = _configuration["AzureStorage:ConnectionString"];
             string containerName = "storagecartphotos";
             BlobContainerClient containerClient = new BlobContainerClient(connectionString, containerName);
             BlobClient blobClient = containerClient.GetBlobClient(category.CategoryImage.FileName);
-            MemoryStream ms=new MemoryStream();
-            
-                await category.CategoryImage.CopyToAsync(ms);
-                ms.Position = 0;
-                await blobClient.UploadAsync(ms);
-            category.CategoryImagePath=blobClient.Uri.AbsoluteUri;
-            
+            MemoryStream ms = new MemoryStream();
 
-           await  _context.Categories.AddAsync(category);
+            await category.CategoryImage.CopyToAsync(ms);
+            ms.Position = 0;
+            await blobClient.UploadAsync(ms);
+            category.CategoryImagePath = blobClient.Uri.AbsoluteUri;
+
+            await _context.Categories.AddAsync(category);
             await _context.SaveChangesAsync();
             return StatusCode(StatusCodes.Status201Created);
         }
