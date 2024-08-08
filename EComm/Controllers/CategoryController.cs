@@ -5,6 +5,7 @@ using EComm.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -46,9 +47,10 @@ namespace EComm.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromForm] Category category)
         {
-            
 
-            string connectionString = @"DefaultEndpointsProtocol=https;AccountName=shoppingcartstoragevr;AccountKey=80nYi94NkfSILiyPpCqnnFX4iKbCaZdkiV7Ng/EJqc7fkinYD1iPnkHsnvWmIjcdjocLYPqRCWde+AStwhR+dg==;EndpointSuffix=core.windows.net";
+            string connectionString = Environment.GetEnvironmentVariable(@"DefaultEndpointsProtocol=https;AccountName=shoppingcartstoragevr;AccountKey=80nYi94NkfSILiyPpCqnnFX4iKbCaZdkiV7Ng/EJqc7fkinYD1iPnkHsnvWmIjcdjocLYPqRCWde+AStwhR+dg==;EndpointSuffix=core.windows.net");
+
+            //string connectionString = @"DefaultEndpointsProtocol=https;AccountName=shoppingcartstoragevr;AccountKey=80nYi94NkfSILiyPpCqnnFX4iKbCaZdkiV7Ng/EJqc7fkinYD1iPnkHsnvWmIjcdjocLYPqRCWde+AStwhR+dg==;EndpointSuffix=core.windows.net";
             string containerName = "storagecartphotos";
             BlobContainerClient containerClient = new BlobContainerClient(connectionString, containerName);
             BlobClient blobClient = containerClient.GetBlobClient(category.CategoryImage.FileName);
