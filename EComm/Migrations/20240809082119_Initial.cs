@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EComm.Migrations
 {
-    public partial class Init : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,6 +30,7 @@ namespace EComm.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BookWriterId = table.Column<int>(type: "int", nullable: false),
                     BookWritterId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -54,7 +55,6 @@ namespace EComm.Migrations
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BookUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateDate = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ISBNNUMBER = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BookCoverId = table.Column<int>(type: "int", nullable: false),
                     BookWritterId = table.Column<int>(type: "int", nullable: false)
