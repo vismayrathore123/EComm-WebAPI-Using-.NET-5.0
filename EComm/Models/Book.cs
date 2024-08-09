@@ -11,8 +11,8 @@ namespace EComm.Models
         public string Description { get; set; }
         public string ImageUrl { get; set; }
         public string BookUrl { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public string CreateDate { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
+        
         public string ISBNNUMBER { get; set; }
         [NotMapped]
         public IFormFile ImageFile { get; set; }

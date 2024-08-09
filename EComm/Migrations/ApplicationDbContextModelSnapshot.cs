@@ -35,9 +35,6 @@ namespace EComm.Migrations
                     b.Property<int>("BookWritterId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CreateDate")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -68,6 +65,9 @@ namespace EComm.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BookWriterId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("BookWritterId")
                         .HasColumnType("int");
@@ -129,9 +129,11 @@ namespace EComm.Migrations
 
             modelBuilder.Entity("EComm.Models.BookCover", b =>
                 {
-                    b.HasOne("EComm.Models.BookWritter", null)
+                    b.HasOne("EComm.Models.BookWritter", "BookWritter")
                         .WithMany("BookCovers")
                         .HasForeignKey("BookWritterId");
+
+                    b.Navigation("BookWritter");
                 });
 
             modelBuilder.Entity("EComm.Models.BookCover", b =>
