@@ -55,6 +55,7 @@ namespace EComm.Migrations
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BookUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Trending = table.Column<bool>(type: "bit", nullable: false),
                     ISBNNUMBER = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BookCoverId = table.Column<int>(type: "int", nullable: false),
                     BookWritterId = table.Column<int>(type: "int", nullable: false)

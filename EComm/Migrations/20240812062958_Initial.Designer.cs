@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EComm.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240809082119_Initial")]
+    [Migration("20240812062958_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,6 +51,9 @@ namespace EComm.Migrations
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Trending")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

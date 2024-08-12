@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace EComm.Controllers
 {
@@ -29,6 +30,26 @@ namespace EComm.Controllers
             await _context.SaveChangesAsync();
             return StatusCode(StatusCodes.Status201Created);
         }
+        [HttpGet]
+        public async Task <IActionResult> GetWriters(int? pageNumber, int? pageSize) {
+            int currentPageNumber = pageNumber ?? 1;
+            int currentPageSize = pageSize ?? 5;
+            var writers = await (from writer in _context.BookWritters
+                                 select new
+                                 {
+                                     Id = writer.Id,
+                                     Name=writer.Name, 
+                                     ImageUrl=writer.ImageUrl,
+                                 }).ToListAsync();
+            return Ok(writers.Skip((currentPageNumber - 1) * currentPageSize).Take(currentPageSize));
 
+        }
+        [HttpGet("[action]")] 
+        public async Task<IActionResult> WriterDetails(int id )
+        {
+            var writer =await (_context.BookWritters.Include(x => x.Books).Where(x => x.Id == id).FirstOrDefaultAsync());
+            return Ok(writer);
+
+        }
     }
 }

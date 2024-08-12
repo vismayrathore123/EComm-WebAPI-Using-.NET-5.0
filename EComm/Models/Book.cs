@@ -12,6 +12,7 @@ namespace EComm.Models
         public string ImageUrl { get; set; }
         public string BookUrl { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
+        public Boolean Trending { get; set; }
         
         public string ISBNNUMBER { get; set; }
         [NotMapped]
